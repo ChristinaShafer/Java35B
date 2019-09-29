@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1750</x>
+      <y>1280</y>
+      <w>410</w>
+      <h>590</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+OptionSet
+Package::model
+implements Serializable
+style=wordwrap
+--
+- name: String
+- opt: ArrayList&lt;Option&gt;
+- optionChoice: Option
+
+--
++ OptionSet(String name, int size)
+# String getName()
+# void setName(String name)
+# ArrayList&lt;Option&gt; getOpt()
+# void setOpt(ArrayList&lt;Option&gt; opt)
+# Option getOptionChoice() 
+# void setChoice(Option optionChoice)
+# void setChoice(String optionChoiceName)
+# int getOptSize()
+# String getOptNameValue(int index)
+# float getOptPriceValue(int index)
+# Option getOption(String s)
+# Option getOption(int index)
+# int getOptIndex(String s)
+# void setOptValue(int index, String s, float price)
+# void setOptPrice(int index, float price)
+# void setOptName(int index, String s)
+# void deleteOption(int index)
+# void addOption(String name, float price)
+# void print()
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2190</x>
+      <y>1450</y>
+      <w>460</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+Option
+Package::model
+implements Serializable
+style=wordwrap
+--
+- name: String
+- price: float
+--
+# Option()
+# Option(String name, float price)
+# String getName()
+# void setName(String name)
+# float getPrice()
+# void setPrice(float price)
+# void print()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1060</x>
+      <y>90</y>
+      <w>430</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+FileIO
+Package::Util
+style=wordwrap
+--
+--
++ FileIO() 
+- void readData(String fname)
++ Automotive buildAutoObject(String filename) 
++ void serializeAuto(Automotive a1) 
++ Automotive deSerializeAuto(int year, String make, String model)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>40</x>
+      <y>20</y>
+      <w>510</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Christina Shafer
+CIS 35B - Fall 2018
+Lab 6 Servlet
+Due: 12/10/2018
+Turned in: 12/9/2018
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1480</x>
+      <y>80</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+  Associated with</panel_attributes>
+    <additional_attributes>120.0;30.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1930</x>
+      <y>1120</y>
+      <w>100</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+  Contains</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2150</x>
+      <y>1280</y>
+      <w>370</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+  Contains</panel_attributes>
+    <additional_attributes>280.0;170.0;280.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2130</x>
+      <y>100</y>
+      <w>530</w>
+      <h>540</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+AutoException
+Package::exception
+style=wordwrap
+--
+- int errorno;
+- String errormsg;
+- Automobile a;
+- int index;
+--
++ AutoException()
++ AutoException(String errormsg)
++ AutoException(int errorno)
++ AutoException(int errorno, String errormsg)
++ AutoException(int errorno, String errormsg, int index)
++ AutoException(int errorno, String errormsg, Automobile a)
++ AutoException(int errorno, String errormsg, Automobile a, int index)
++ int getErrorno()
++ void setErrorno(int errorno)
++ String getErrormsg()
++ void setErrormsg(String errormsg)
++ Automobile getAuto()
++ void setAuto(Automobile a)
++ int getIndex()
++ void setIndex(int index)
++ void printmyproblem()
++ void logException(int errorNo, String errorMsg)
++ String fix(int errorno)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>1340</y>
+      <w>210</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+CreateAuto
+Package::adaptor
+style=wordwrap
+--
++abstract void buildAuto(String fileName)
++abstract void printAuto(int year, String make, String model)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>1340</y>
+      <w>240</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+EditThread
+Package::scale
+style=wordwrap
+--
++abstract void updateOptionSetName(int threadNum, int year,String make, String model, String optionSetName, String newOptionSetName) throws AutoException;
++abstract void updateOptionPrice(int threadNum, int year,String make, String model, String optionSetName, String option, float newPrice) throws AutoException;
++abstract void updateOptionName(int threadNum, int year,String make, String model, String optionSetName, String optionName, String newOptionName) throws AutoException;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>1340</y>
+      <w>210</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+FixAuto
+Package::adaptor
+style=wordwrap
+--
++abstract String fix(AutoException e);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>170</x>
+      <y>630</y>
+      <w>430</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Abstract Class&gt;&gt;
+ProxyAutomobile
+Package::adaptor
+style=wordwrap
+--
+- static LinkedHashMap&lt;String, Automobile&gt; automobiles
+- Automobile a1
++ ProxyAutomobile()
++ void updateOptionSetName(int year,String make, String model, String optionSetName, String newName) throws AutoException
++ void updateOptionPrice(int year,String make, String model, String optionSetName, String option, float newPrice) throws AutoException
++ void buildAuto(String fileName) throws AutoException 
++ void printAuto(Automobile a)throws AutoException 
++ void printAuto(int year, String make, String model)throws AutoException 
++ String fix(AutoException e)
++ void chooseOptions()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>1110</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+BuildAuto
+Package::adaptor
+style=wordwrap
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2260</x>
+      <y>750</y>
+      <w>240</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+FixHelpers
+Package::exception
+style=wordwrap
+--
+- int errorno;
+--
++ FixHelpers()
++ FixHelpers(int errorno)
++ String fix105()
++ String fix115()
++ String fix125()
++ String fix135(int i)
++ String fix145(int i)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>390</y>
+      <w>1030</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+  Contains</panel_attributes>
+    <additional_attributes>1010.0;10.0;90.0;10.0;90.0;270.0;10.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>1030</y>
+      <w>90</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+  extends</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>450</x>
+      <y>1190</y>
+      <w>120</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+  implements
+  </panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>230</x>
+      <y>1190</y>
+      <w>150</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+  implements
+  </panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>1190</y>
+      <w>320</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+  implements
+  </panel_attributes>
+    <additional_attributes>210.0;150.0;210.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2370</x>
+      <y>630</y>
+      <w>150</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+  Associated with</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>860</x>
+      <y>1340</y>
+      <w>210</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ChooseAuto
+Package::adaptor
+style=wordwrap
+--
++abstract void chooseOptions();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>1190</y>
+      <w>530</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+  implements
+  </panel_attributes>
+    <additional_attributes>420.0;150.0;420.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>480</y>
+      <w>680</w>
+      <h>700</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+EditOptions
+Package::Scale
+style=wordwrap
+--
+public class EditOptions extends ProxyAutomobile  implements Runnable 
+- static int threadCount=1;
+- Thread t;
++ int threadNum;
+- boolean isUpdating;
+- int year;
+- String make;
+- String model;
+- String optionSetName;
+- String newOptionSetName;
+- String optionName;
+- String newOptionName;
+- float newOptionPrice;
+- String editType;
+--
++ EditOptions(int threadNum, int year,String make, String model, String optionSetName, String newOptionSetName) {
++ EditOptions(int threadNum, int year,String make, String model, String optionSetName,String optionName, String newOptionName) {
++ EditOptions(int threadNum, int year,String make, String model, String optionSetName,String optionName, float newOptionPrice) {
++ void updateOptionSetName(int year,String make, String model, String optionSetName, String newOptionSetName)
+			throws AutoException 
++ void updateOptionName(int year,String make, String model, String optionSetName, String optionName, String newOptionName)
+			throws AutoException 
++ void updateOptionPrice(int threadNum,int year,String make, String model, String optionSetName, String optionName, float newPrice)
+			throws AutoException 
+public void run() 
+public void start() </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>830</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+  extends</panel_attributes>
+    <additional_attributes>10.0;30.0;170.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1600</x>
+      <y>90</y>
+      <w>480</w>
+      <h>1040</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+Automobile
+Package::Model
+implements Serializable
+style=wordwrap
+--
+- year: int
+- make: String
+- model: String
+- basePrice: float
+- opSet: ArrayList&lt;OptionSet&gt;
+- choice: ArrayList&lt;Option&gt;
+--
++ Automotive()
++ Automotive(int year, String make, String modelName, float basePrice, int totalOptions)
++ String getModel() 
++ void setModel(String model)
++ String getMake() 
++ void setMake(String make)  
++ int getYear() 
++ String getFullName()
++ void setYear(int year) 
++ float getBasePrice() 
++ void setBasePrice(float basePrice)
++ String getOptionSetName(int index) 
++ ArrayList&lt;OptionSet&gt; getOpset()
++ ArrayList&lt;Option&gt; getChoice()
++ void setChoice(ArrayList&lt;Option&gt; choice)
++ ArrayList&lt;Option&gt; getOptions(int index)
++ OptionSet getOpset(int i)
++ OptionSet getOpset(String s) 
++ int getOpsetIndex(String s)
++ String getOptionNameValue(int i, int j) 
++ float getOptionPriceValue(int i, int j) 
++ void setOpset(OptionSet[] opset) 
++ void setOpsetValue(int i, OptionSet os)
++ void setOptionSetName(int i, String optionSetName)
++ void setOptionValue(int i, int j, String name, float price) 
++ void setOptionPrice(int i, String optionName, float newPrice)
++ void addOptionValue(int i, String name, float price)
++ void deleteOptionSet(String opname) 
++ void deleteOptionSet(int index) 
++ String getOptionChoice(String setName)
++ String getOptionChoice(int opSetIndex)
++ float getOptionChoicePrice(String setName)
++ void setOptionChoice(String setName, String optionName)
++ void setOptionChoice(String setName, int optionIndex)
++ void setOptionChoice(int opSetIndex, int optionIndex)
++ void clearChoice()
++ float getTotalPrice()
++ void print() 
++ void printTotal()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1390</x>
+      <y>1260</y>
+      <w>260</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+CarModelOptionsIO
+Package::client
+style=wordwrap
+--
++ CarModelOptionsIO()
++ Object loadPropsFile(String fname)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1100</x>
+      <y>1260</y>
+      <w>260</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+DefaultSocketClient
+Package::client
+extends Thread
+style=wordwrap
+--
+- ObjectOutputStream out;
+- ObjectInputStream in;
+- BufferedReader stdIn;
+- Socket sock;
+- String strHost;
+- int iPort;
+- CarModelOptionsIO clientFTP;
+- SelectCarOptions clientProtocol;
+- boolean DEBUG=false;
+--
++ DefaultSocketClient(String strHost, int iPort)
++ void establishConnection()
++ void handleConnection()
++ void sendOutput(Object obj)
++ String getModelList()
++ Automobile getAuto(String model)
++ void closeSession()
++ void run()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1400</x>
+      <y>1630</y>
+      <w>260</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+SelectCarOptions
+Package::client
+style=wordwrap
+--
+- static boolean DEBUG
+- Scanner in 
+--
++ SelectCarOptions()
++ void configureAuto(Object obj)
++ boolean isAutomobile(Object obj)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>940</x>
+      <y>1590</y>
+      <w>480</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+  Associated with</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0;460.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1350</x>
+      <y>1390</y>
+      <w>190</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+  Associated with</panel_attributes>
+    <additional_attributes>10.0;80.0;170.0;80.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1350</x>
+      <y>1490</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+  Associated with</panel_attributes>
+    <additional_attributes>10.0;30.0;170.0;30.0;170.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>70</y>
+      <w>350</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+ServletUtilities
+Package::coreservlet
+style=wordwrap
+--
++static int getIntParameter(HttpServletRequest request, String paramName,int defaultValue)
++static double getDoubleParameter(HttpServletRequest request, String paramName, double defaultValue) 
++static String filter(String input) 
++static boolean hasSpecialChars(String input) 
++private ServletUtilities() </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>270</y>
+      <w>270</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;servlet&gt;&gt;
+ModelList
+Package::servlet
+extends HttpServlet
+style=wordwrap
+--
++ModelList() 
+#void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+#void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>270</y>
+      <w>270</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;servlet&gt;&gt;
+ConfigureModel
+Package::servlet
+extends HttpServlet
+style=wordwrap
+--
++ConfigureModel() 
+#void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+#void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>90</x>
+      <y>580</y>
+      <w>1180</w>
+      <h>1310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+  Contains</panel_attributes>
+    <additional_attributes>1160.0;1200.0;1160.0;1290.0;10.0;1290.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>90</x>
+      <y>580</y>
+      <w>1180</w>
+      <h>1310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+  </panel_attributes>
+    <additional_attributes>1160.0;1200.0;1160.0;1290.0;10.0;1290.0;20.0;30.0;410.0;30.0;410.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>80</y>
+      <w>200</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>180.0;30.0;10.0;30.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>80</y>
+      <w>430</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+  Associated with</panel_attributes>
+    <additional_attributes>410.0;30.0;10.0;30.0;10.0;190.0</additional_attributes>
+  </element>
+</diagram>

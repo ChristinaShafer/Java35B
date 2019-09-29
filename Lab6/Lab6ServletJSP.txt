@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="java.io.*, java.net.*" %>
+<% String model = request.getParameter("model"); 
+String size=request.getParameter("numOptions");
+int basePrice=Integer.parseInt(request.getParameter("basePrice"));
+int OpSetsize=Integer.valueOf(request.getParameter("numOptions"));
+int total=basePrice;
+%> 
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title><%= model %></title>
+</head>
+<body bgcolor="#fdf5e6">
+<h1>Your car: <%=model %></h1><br>
+<table border="1" cellpadding="10">
+<tr>
+	<th><%=model %></th>
+	<td>Base Price</td>
+	<td><%=basePrice %></td>
+</tr>
+<% for (int i=0;i<OpSetsize; i++) { 
+	String opName=request.getParameter("optionName" + i);
+	String opNameValue=opName;
+	String[] opValue = request.getParameter(opNameValue).split(",");
+	total+=Integer.parseInt(opValue[1]);
+%>
+	<tr>
+		<th><%=opName %></th>
+		<td><%=opValue[0] %></td>
+		<td><%=opValue[1] %></td>
+	</tr>
+<%} %>
+<tr>
+	<th colspan="2">Total Cost</th>
+	<th><%=total %></th>
+</tr>
+</table>
+</body>
+</html>
+
+

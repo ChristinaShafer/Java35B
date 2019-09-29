@@ -1,0 +1,232 @@
+package servlet;
+
+import java.io.IOException;
+import model.*;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import adapter.BuildAuto;
+import client.DefaultSocketClient;
+import coreservlets.ServletUtilities;
+
+/**
+ * Servlet implementation class ConfigureModel
+ */
+@WebServlet("/ConfigureModel")
+public class ConfigureModel extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ConfigureModel() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		DefaultSocketClient clientSocket = new DefaultSocketClient("localhost", 4445);
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String model = request.getParameter("model");
+		
+		
+		response.setContentType("text/html");
+		String title = "Configuring " + model;
+		out.println
+	      (ServletUtilities.headWithTitle(title) +
+	       "<body bgcolor=\"#fdf5e6\">\n" +
+	       "<h1>" + title + "</h1>\n");
+		out.print("<table border=\"1\" cellpadding=\"10\">\n");
+		out.print("<form action=\"\\Lab6Servlet\\ShowConfiguredModel.jsp\" method=\"get\">");
+		Automobile a=clientSocket.getAuto(model);
+		out.print("<tr><th>Model:</th><th> " + a.getFullName()+"\n");	
+		int size=a.getOpset().size();
+		for (int i=0; i<size; i++) {
+			String opSetName =a.getOptionSetName(i); 
+			out.print("<tr>\n<th>" + opSetName + "</th>");
+			out.print("<input type=\"hidden\" name=\"optionName" + i +"\" value=\"" + opSetName +"\">");
+			out.print("<td><select name=\"" + opSetName + "\">\n");
+			for (int j = 0; j < a.getOptions(i).size(); j++) {
+				String opName = a.getOptionNameValue(i, j);
+				int opValue = (int)a.getOptionPriceValue(i, j);
+				out.print("\t<option value=\"" + opName + "," + String.valueOf(opValue) +  "\">" + opName + " ($" + opValue +")</option>\n");
+				
+			}
+			out.print("</td></tr>");
+		}
+		out.print("<tr><td colspan=\"2\" align=\"right\"><input type=\"submit\"></td></tr>\n");
+		out.print("<input type=\"hidden\" name=\"numOptions\" value=\"" + size +"\">");
+		out.print("<input type=\"hidden\" name=\"basePrice\" value=\"" + (int)a.getBasePrice() +"\">");
+		out.print("<input type=\"hidden\" name=\"model\" value=\"" + model +"\">");
+		out.print("</form></table>");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+========================================================================================
+package servlet;
+import client.*;
+import coreservlets.ServletUtilities;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class ModelList
+ */
+@WebServlet("/ModelList")
+public class ModelList extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ModelList() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		PrintWriter out = response.getWriter();
+		
+		DefaultSocketClient clientSocket = new DefaultSocketClient("localhost", 4445);
+		
+		String[] listArray = clientSocket.getModelList().split("\n");
+		//String[] modelArray= new String[listArray.length-1];
+		//strips off the first line which is a header, leaving an array of model name strings
+		//for (int i=1; i<listArray.length;i++)
+		//	modelArray[i-1]=listArray[i];
+		listArray[0]="Choose Model to Configure";
+		response.setContentType("text/html");
+		String title = "Auto Configuration";
+		out.println
+	      (ServletUtilities.headWithTitle(title) +
+	       "<body bgcolor=\"#fdf5e6\">\n" +
+	       "<h1>" + title + "</h1>\n");
+	        out.println("<form action=\"\\Lab6Servlet\\ConfigureModel\" method=\"get\">");
+		
+		out.print("<select name=\"model\">\n");
+		for (String s : listArray) {
+			out.print("\t<option value=\"" + s + "\">" + s + "</option>\n");
+		}
+		out.print("</select>\n");
+		out.print("<input type=\"submit\">");
+		out.print("</form>\n");
+		out.print("</body>\n</html>\n");
+		out.flush();
+		out.close();
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+========================================================================================
+package servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import coreservlets.ServletUtilities;
+
+/**
+ * Servlet implementation class ShowModel
+ */
+@WebServlet("/ShowModel")
+public class ShowModel extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ShowModel() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		String model = request.getParameter("model"); 
+		int OpSetsize=Integer.valueOf(request.getParameter("numOptions"));
+		
+		
+		
+		response.setContentType("text/html");
+		String title = model;
+		out.println
+	      (ServletUtilities.headWithTitle(title) +
+	       "<body bgcolor=\"#fdf5e6\">\n" +
+	       "<h1>" + title + "</h1>\n");
+		out.print("<table border=\"1\" cellpadding=\"10\">");
+		out.print("<tr><th>"+ model + "</th>");
+		out.print("<td>Base Price</td>");
+		out.print("<td>" + request.getParameter("basePrice") + "</td></tr>");
+		int total=Integer.parseInt(request.getParameter("basePrice"));
+		for (int i=0;i<(int)OpSetsize;i++) {
+			String opName=request.getParameter("optionName" + i);
+			String opNameValue=opName;
+			String[] opValue = request.getParameter(opNameValue).split(",");
+			out.print("<tr><th>" + opName+"</th>");
+			out.print("<td>" + opValue[0] + "</td>");
+			out.print("<td align=\"right\">" + opValue[1] + "</td>");
+			out.print("</tr>");
+			total+=Integer.parseInt(opValue[1]);
+		}
+		out.print("<tr><th colspan=\"2\">Total Cost</th>");
+		out.print("<th>" + total + "</th></tr>");
+		out.print("</table>");
+		
+		out.print("</body></html>");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
