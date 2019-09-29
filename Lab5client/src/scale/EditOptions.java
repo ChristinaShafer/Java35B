@@ -1,0 +1,185 @@
+package scale;
+import adapter.*;
+import model.*;
+import exception.AutoException;
+
+public class EditOptions extends ProxyAutomobile  implements Runnable {
+	private static int threadCount=1;
+	private Thread t;
+	public int threadNum;
+	private boolean isUpdating;
+	private int year;
+	private String make;
+	private String model;
+	private String optionSetName;
+	private String newOptionSetName;
+	private String optionName;
+	private String newOptionName;
+	private float newOptionPrice;
+	private String editType;
+	
+	
+	
+	public EditOptions(int threadNum, int year,String make, String model, String optionSetName, String newOptionSetName) {
+		t=new Thread(this);
+		this.year=year;
+		this.make = make;
+		this.model = model;
+		this.optionSetName = optionSetName;
+		this.newOptionSetName = newOptionSetName;
+		this.editType="OptionSetName";
+		this.threadNum=threadNum;
+		this.isUpdating=false;
+
+		threadCount++;
+
+	}
+	
+	public EditOptions(int threadNum, int year,String make, String model, String optionSetName,String optionName, String newOptionName) {
+		t=new Thread(this);
+		this.year=year;
+		this.make = make;
+		this.model = model;
+		this.optionSetName = optionSetName;
+		this.optionName=optionName;
+		this.newOptionName = newOptionName;
+		this.editType="OptionName";
+		this.threadNum=threadNum;
+		this.isUpdating=false;
+
+		threadCount++;
+	}
+	
+	public EditOptions(int threadNum, int year,String make, String model, String optionSetName,String optionName, float newOptionPrice) {
+		t=new Thread(this);
+		this.year=year;
+		this.make = make;
+		this.model = model;
+		this.optionSetName = optionSetName;
+		this.optionName=optionName;
+		this.newOptionPrice = newOptionPrice;
+		this.editType="OptionPrice";
+		this.threadNum=threadNum;
+		this.isUpdating=false;
+
+		threadCount++;
+	}
+	
+	
+	
+	
+	//--------------------------Overide update options (originals in ProxyAuto)-----------------------------------
+	public void updateOptionSetName(int year,String make, String model, String optionSetName, String newOptionSetName)
+			throws AutoException {
+			String keyValue= String.valueOf(year)+make+model;
+			OptionSet OS = ProxyAutomobile.getAutomobiles().get(keyValue).getOpset(optionSetName);
+			
+			synchronized (OS) {
+				while (isUpdating) {
+					try {
+						System.out.println("Thread " + Integer.toString(threadNum) + "waiting.");
+						wait();
+					}
+					catch (InterruptedException ie){
+						System.out.println("Thread " + Integer.toString(threadNum) + "interrupted.");
+					}
+				}
+				isUpdating=true;
+				System.out.println("Thread " + Integer.toString(threadNum) + " updating Option Set Name");
+				super.updateOptionSetName(year, make, model, optionSetName, newOptionSetName);
+				
+				isUpdating=false;
+				System.out.println("Thread " + Integer.toString(threadNum) + " finished updating Option Set Name");
+				notifyAll();
+				System.out.println("All threads notified.");	
+				}
+			}
+		
+	public void updateOptionName(int year,String make, String model, String optionSetName, String optionName, String newOptionName)
+			throws AutoException {
+		String keyValue= String.valueOf(year)+make+model;
+		OptionSet OS = ProxyAutomobile.getAutomobiles().get(keyValue).getOpset(optionSetName);
+		if (OS != null){
+		synchronized (OS) {
+			while (isUpdating) {
+				try {
+					System.out.println("Thread " + Integer.toString(threadNum) + "waiting.");
+					OS.wait();
+				}
+				catch (InterruptedException ie){
+					System.out.println("Thread " + Integer.toString(threadNum) + "interrupted.");
+				}
+			}
+			isUpdating=true;
+			System.out.println("Thread " + Integer.toString(threadNum) + " updating Option Name");
+			super.updateOptionName(year, make, model, optionSetName, optionName, newOptionName);
+			
+			isUpdating=false;
+			System.out.println("Thread " + Integer.toString(threadNum) + " finished updating Option Name");
+			OS.notifyAll();
+			System.out.println("All threads notified.");	
+			}
+		}
+		}
+		
+	public void updateOptionPrice(int threadNum,int year,String make, String model, String optionSetName, String optionName, float newPrice)
+			throws AutoException {
+		String keyValue= String.valueOf(year)+make+model;
+		OptionSet OS = ProxyAutomobile.getAutomobiles().get(keyValue).getOpset(optionSetName);
+		
+		synchronized (OS) {
+			while (isUpdating) {
+				try {
+					System.out.println("Thread " + Integer.toString(threadNum) + "waiting.");
+					wait();
+				}
+				catch (InterruptedException ie){
+					System.out.println("Thread " + Integer.toString(threadNum) + "interrupted.");
+				}
+			}
+			isUpdating=true;
+			System.out.println("Thread " + Integer.toString(threadNum) + " updating Option Price");
+			super.updateOptionPrice(year, make, model, optionSetName, optionName, newPrice);
+			
+			isUpdating=false;
+			System.out.println("Thread " + Integer.toString(threadNum) + " finished updating Option Price");
+			notifyAll();
+			System.out.println("All threads notified.");	
+			}
+		}
+	
+	
+		
+
+	
+public void run() {
+	System.out.println("Starting Thread " + Integer.toString(threadNum));
+	try {
+		if (editType.equals("OptionSetName")) {
+			updateOptionSetName(year,make,model,optionSetName,newOptionSetName);
+		}
+		else if (editType.equals("OptionPrice")) {
+			updateOptionPrice(year,make,model,optionSetName,optionName,newOptionPrice);
+		}
+		else if (editType.equals("OptionName")) {
+			updateOptionName(year,make,model,optionSetName,optionName,newOptionName);
+		}
+		else {
+			throw new AutoException(300,"Scale>EditOptions>run: no editType chosen");
+		}
+	}
+	catch (AutoException e) {
+		e.fix(e.getErrorno());
+	}
+	System.out.println("Ending Thread " + Integer.toString(threadNum));
+	t.interrupt();
+	return;
+}
+
+
+public void start() {
+	t.start();
+}
+}
+	
+

@@ -1,0 +1,276 @@
+package adapter;
+
+import model.*;
+
+import scale.*;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.io.IOException;
+import java.util.Properties;
+
+import exception.*;
+import util.FileIO;
+
+public abstract class ProxyAutomobile  {
+	private static LinkedHashMap<String, Automobile> automobiles = new LinkedHashMap<>();
+	private  Automobile a1;
+
+	// constructor
+	public ProxyAutomobile() {
+		a1 = new Automobile();
+	}
+	
+	public static LinkedHashMap<String, Automobile> getAutomobiles() {
+		return automobiles;
+	}
+
+
+
+	public static void setAutomobiles(LinkedHashMap<String, Automobile> automobiles) {
+		ProxyAutomobile.automobiles = automobiles;
+	}
+
+	public void addAuto(Automobile auto) throws AutoException{
+		try {
+			String keyValue= auto.getFullName();
+			ProxyAutomobile.automobiles.put(keyValue,auto);
+		}
+		 catch (Exception e) {
+				if (Automobile.DEBUG)
+					System.out.print("Error: " + e);
+				String msg = "ProxyAuto: adding auto to LHM:" + e;
+				throw new AutoException(500, msg);
+		 }
+	};
+
+	public String listAutos() {
+		
+		StringBuilder response = new StringBuilder();
+		List<String> list = new ArrayList<String>();
+		for (String str : ProxyAutomobile.getAutomobiles().keySet()) {
+		 list.add(str);
+		}
+		Collections.sort(list);
+		for (String str : list) {
+		 response.append(str+"\n");
+		}
+		return response.toString();
+	};
+	
+	
+	
+	public Automobile getAuto(String fullAutoName) {
+		Automobile a = ProxyAutomobile.getAutomobiles().get(fullAutoName);
+		return a;
+	};
+	
+	public void updateOptionSetName(int year,String make, String model, String optionSetName, String newOptionSetName)
+			throws AutoException {
+		try {
+			String keyValue= String.valueOf(year)+make+model;
+			a1=automobiles.get(keyValue);
+		} catch (Exception e) {
+			AutoException a = new AutoException(215,
+					"ProxyAutomobile>updateOptionSetName(): LHM get problem: " + String.valueOf(year)+make+model);
+		}
+		int opSetIndex = a1.getOpsetIndex(optionSetName);
+		try {
+			a1.setOptionSetName(opSetIndex, newOptionSetName);
+		} catch (Exception e) {
+			AutoException a1 = new AutoException(225, "ProxyAutomobile>updateOptionSetName()>setOptionSetName problem.",
+					opSetIndex);
+		}
+		try {
+			String keyValue = String.valueOf(a1.getYear())+a1.getMake()+a1.getModel();
+			automobiles.put(keyValue, a1);
+		} catch (Exception e) {
+			AutoException a2 = new AutoException(205,
+					"ProxyAutomobile>updateOptionSetName(): LHM put problem: " + String.valueOf(year)+make+model);
+		}
+	}
+
+	public void updateOptionName(int threadNum,int year,String make, String model, String optionSetName, String optionName, String newOptionName)
+			throws AutoException {
+		//EditOptions et = new EditOptions(threadNum,year,make,model,optionSetName,optionName,newOptionName);
+		//Thread thread = new Thread(et);
+      //  thread.start();
+	}
+	
+	public void updateOptionPrice(int threadNum,int year,String make, String model, String optionSetName, String optionName, float newPrice)
+			throws AutoException {
+		//EditOptions et = new EditOptions(threadNum,year,make,model,optionSetName,optionName,newPrice);
+		//Thread thread = new Thread(et);
+        //thread.start();
+	}
+	
+	public void updateOptionSetName(int threadNum,int year,String make, String model, String optionSetName, String newOptionSetName)
+			throws AutoException {
+		//EditOptions et = new EditOptions(threadNum,year,make,model,optionSetName,newOptionSetName);
+		//Thread thread = new Thread(et);
+        //thread.start();
+	}
+	public void updateOptionName(int year,String make, String model, String optionSetName, String optionName, String newOptionName)
+			throws AutoException {
+		try {
+			String keyValue= String.valueOf(year)+make+model;
+			a1=automobiles.get(keyValue);
+		} catch (Exception e) {
+			AutoException a = new AutoException(215,
+					"ProxyAutomobile>updateOptionPrice(): LHM get problem: " + String.valueOf(year)+make+model);
+		}
+		int opSetIndex = a1.getOpsetIndex(optionSetName);
+		try {
+			a1.setOptionName(opSetIndex, optionName, newOptionName);
+		} catch (Exception e) {
+			AutoException a2 = new AutoException(225, "ProxyAutomobile>updateOptionName()>setOptionName problem.",
+					opSetIndex);
+		}
+		try {
+			String keyValue = String.valueOf(a1.getYear())+a1.getMake()+a1.getModel();
+			automobiles.put(keyValue, a1);
+		} catch (Exception e) {
+			AutoException a2 = new AutoException(205,
+					"ProxyAutomobile>updateOptionSetName(): LHM put problem: " + String.valueOf(year)+make+model);
+		}
+		a1.print();
+	}
+	public void updateOptionPrice(int year,String make, String model, String optionSetName, String optionName, float newPrice)
+			throws AutoException {
+		try {
+			String keyValue= String.valueOf(year)+make+model;
+			a1=automobiles.get(keyValue);
+		} catch (Exception e) {
+			AutoException a = new AutoException(215,
+					"ProxyAutomobile>updateOptionPrice(): LHM get problem: " + String.valueOf(year)+make+model);
+		}
+		
+		try {
+			int opSetIndex = a1.getOpsetIndex(optionSetName);
+			a1.setOptionPrice(opSetIndex, optionName, newPrice);
+		} catch (Exception e) {
+			AutoException a2 = new AutoException(225, "ProxyAutomobile>updateOptionPrice()>setOptionPrice problem."+
+					optionSetName);
+		}
+		try {
+			String keyValue = String.valueOf(a1.getYear())+a1.getMake()+a1.getModel();
+			automobiles.put(keyValue, a1);
+		} catch (Exception e) {
+			AutoException a2 = new AutoException(205,
+					"ProxyAutomobile>updateOptionSetName(): LHM put problem: " + String.valueOf(year)+make+model);
+		}
+	}
+
+	
+	public void buildAuto(String fileName) throws AutoException {
+
+		FileIO f1 = new FileIO();
+		a1 = f1.buildAutoObject(fileName);
+		String keyValue = a1.getFullName();
+		automobiles.put(keyValue, a1);
+	}
+	
+	public void buildAuto(String fileName,String fileType) throws AutoException {
+
+		FileIO f1 = new FileIO();
+		a1 = f1.buildAutoObject(fileName,fileType);
+		String keyValue = a1.getFullName();
+		automobiles.put(keyValue, a1);
+	}
+
+	public void buildAuto(Properties props) throws AutoException {
+
+		FileIO f1 = new FileIO();
+		a1 = f1.readPropData(props);
+		String keyValue = a1.getFullName();
+		automobiles.put(keyValue, a1);
+	}
+	
+	
+	
+	public void printAuto(Automobile a) throws AutoException {
+		try {
+		a.print();
+		}
+		catch (Exception e) {
+			System.out.println("Error printing " + a.getYear() + " " +a.getMake() + " " + a.getModel());
+			AutoException ae = new AutoException(215,
+					"ProxyAutomobile>updateOptionPrice(): LinkedHashMap get problem: " + a.getYear() + " " +a.getMake() + " " + a.getModel());
+		}
+	}
+	
+	
+	public void printAuto(int year, String make, String model) throws AutoException {
+		FileIO f1 = new FileIO();
+		try {
+			String keyValue= String.valueOf(year)+make+model;
+			a1=automobiles.get(keyValue);
+			a1.print();
+		} catch (Exception e) {
+			System.out.println(make + " " + model + " is not available to be printed.");
+			AutoException a = new AutoException(215,
+					"ProxyAutomobile>updateOptionPrice(): LinkedHashMap get problem: " + String.valueOf(year) + make + model);
+		}
+
+	}
+
+	public String fix(AutoException e) {
+		FixHelpers fh1 = new FixHelpers();
+		switch (e.getErrorno()) {
+		case 105:
+			return fh1.fix105();
+		case 115:
+			return fh1.fix115();
+		case 125:
+			return fh1.fix125();
+		case 135:
+			return fh1.fix135(e.getIndex());
+		case 145:
+			return fh1.fix145(e.getIndex());
+		default:
+			System.out.println("Your error has been logged.");
+			return null;
+		}
+	}
+
+	public void chooseOptions() {
+		if (a1.getChoice().size() > 0) {
+			a1.clearChoice();
+		}
+		Scanner sc1 = new Scanner(System.in);
+		for (int i = 0; i < a1.getOpset().size(); i++) {
+			boolean done=false;
+			while (done== false) {
+			String setName = a1.getOptionSetName(i);
+			System.out.println("Please enter number for choice of " + setName);
+			int num = 1;
+			int answer;
+			// iterate over options and print option name & price
+			for (int j = 0; j < a1.getOptions(i).size(); j++) {
+				num = j + 1;
+				System.out.printf(num + ". " + a1.getOptionNameValue(i, j) + ": $%.2f\n" ,a1.getOptionPriceValue(i, j));
+			}
+			answer = sc1.nextInt();
+			if (answer>=1 && answer<=a1.getOptions(i).size()) {
+				String optionName = a1.getOptionNameValue(i, answer - 1);
+				a1.setOptionChoice(i, answer - 1);
+				done=true;
+			}
+			else {
+				System.out.println("Error: Choice number not in range.\n");
+			}
+			}
+		}
+		System.out.println();
+		try {
+			String keyValue= String.valueOf(a1.getYear())+a1.getMake()+a1.getModel();
+			automobiles.put(keyValue, a1);
+		} catch (Exception e) {
+			AutoException a2 = new AutoException(205,
+					"ProxyAutomobile>ChooseOptions(): LinkedHashMap put: " + String.valueOf(a1.getYear()) + a1.getMake() + " " + a1.getModel());
+		}
+	}
+
+}

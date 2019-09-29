@@ -1,0 +1,40 @@
+Maker
+Toyota
+Model
+Tacoma TRD Sport
+Base Price
+31297
+Year
+2018
+Options
+5
+Color
+9
+Barcelona Red Metallic,0
+Blazing Blue Pearl,0
+Cement,0
+Inferno,0
+Magnetic Gray Metallic,0
+Midnight Black Metallic,0
+Quicksand, 0
+Silver Sky Metallic, 0
+Super White,0
+Style Variations
+3
+Automatic 6-spd Two Wheel Drive,0
+Manual 6-spd Four Wheel Drive,0
+Automatic 6-spd Four Wheel Drive,0
+Packages
+4
+Floor Mat Package, 357
+Premium Package, 570
+Technology Package, 800
+Truck Exterior Package, 934
+Side Impact Air Bags
+2
+none,0
+selected,350
+Power Moonroof
+2
+none,0
+selected,595

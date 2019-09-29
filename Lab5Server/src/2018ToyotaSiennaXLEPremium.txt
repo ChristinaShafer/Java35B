@@ -1,0 +1,37 @@
+Maker
+Toyota
+Model
+Sienna XLE Premium
+Base Price
+32210
+Year
+2018
+Options
+5
+Color
+8
+Alumina Jade Metallic,0
+Attitude Black,0
+Parisian Night Pearl,0
+Predawn Gray Mica,0
+Salsa Red Pearl,0
+Silver Sky Metallic,0
+Super White,0
+Blizzard Pearl,395
+Style Variations
+2
+Front Wheel Drive,0
+All-Wheel Drive,0
+Brakes/Traction Control
+3
+standard,0
+ABS,400
+ABS with Advance Traction,1625
+Side Impact Air Bags
+2
+none,0
+selected,350
+Power Moonroof
+2
+none,0
+selected,595

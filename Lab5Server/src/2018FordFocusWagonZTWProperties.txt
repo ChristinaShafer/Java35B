@@ -1,0 +1,47 @@
+Make=Ford
+Model=Focus Wagon ZTW
+BasePrice=18445
+Year=2018
+Option1:Color
+Option1A_name:Fort Knox Gold Clearcoat Metallic
+Option1A_price:0
+Option1B_name:Liquid Grey Clearcoat Metallic
+Option1B_price:0
+Option1C_name:Infra-Red Clearcoat
+Option1C_price:0
+Option1D_name:Grabber Green Clearcoat Metallic
+Option1D_price:0
+Option1E_name:Sangria Red Clearcoat Metallic
+Option1E_price:0
+Option1F_name:French Blue Clearcoat Metallic
+Option1F_price:0
+Option1G_name:Twilight Blue Clearcoat Metallic
+Option1G_price:0
+Option1H_name:CD Silver Clearcoat Metallic
+Option1H_price:0
+Option1I_name:Pitch Black Clearcoat
+Option1I_price:0
+Option1J_name:Cloud 9 White Clearcoat
+Option1J_price:0
+Option2:Transmission
+Option2A_name:automatic
+Option2A_price:0
+Option2B_name:standard
+Option2B_price:-815
+Option3:Brakes/Traction Control
+Option3A_name:standard
+Option3A_price:0
+Option3B_name:ABS
+Option3B_price:400
+Option3C_name:ABS with Advance Traction
+Option3C_price:1625
+Option4:Side Impact Air Bags
+Option4A_name:none
+Option4A_price:0
+Option4B_name:selected
+Option4B_price:350
+Option5:Power Moonroof
+Option5A_name:none
+Option5A_price:0
+Option5B_name:selected
+Option5B_price:595
